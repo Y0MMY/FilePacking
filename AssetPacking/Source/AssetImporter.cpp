@@ -134,21 +134,22 @@ bool AssetImporter::WriteFileData(const AssetInfo& asset, const std::filesystem:
 	return true;
 }
 
-void AssetImporter::AddResource(const std::filesystem::path& inputPath)
+bool AssetImporter::AddResource(const std::filesystem::path& inputPath)
 {
 	if (!std::filesystem::exists(inputPath))
 	{
-		std::cout << "File is not exist" << std::endl;
-		return;
+		std::cout << "File is not exist: " << inputPath << std::endl;
+		return false;
 	}
 
 	std::vector<char> fileContents = ReadFileContents(inputPath);
 	if (fileContents.empty())
 	{
-		std::cout << "Could not read the contents of the file" << std::endl;
-		return;
+		std::cout << "Could not read the contents of the file: " << inputPath << std::endl;
+		return false;
 	}
 
 	m_Assets.push_back({ fileContents.size(), inputPath.filename().string(), fileContents, s_AssetExtensionMap[inputPath.extension().string()] });
+	return true;
 }
 
