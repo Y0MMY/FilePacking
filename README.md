@@ -33,39 +33,10 @@ The `Asset` structure represents a resource to be imported and packed. It has th
 
 ## Example Usage
 
-```cpp
-#include "AssetImporter.h"
+# Export assets
+```AssetImporter --export -add=resource1.txt -add=resource2.png -add=resource3.wav -path=output/```
+    
+# Import assets
+```AssetImporter --import -file=packed.bin -path=output/```
 
-int main()
-{
-    AssetImporter ai;
 
-    // Adding resources to be packed
-    ai.AddResource("resource1.txt");
-    ai.AddResource("resource2.png");
-    ai.AddResource("resource3.wav");
-
-    // Packing resources into "packed.bin" file
-    if (ai.Pack("packed.bin"))
-    {
-        std::cout << "Packing successful!" << std::endl;
-    }
-    else
-    {
-        std::cout << "Error packing resources." << std::endl;
-    }
-
-    // Reading packed resources from file
-    std::vector<AssetImporter::Asset> assets = ai.ReadFile("packed.bin");
-
-    // Outputting information about the resources
-    for (const auto& asset : assets)
-    {
-        std::cout << "Name: " << asset.m_Name << std::endl;
-        std::cout << "Size: " << asset.m_Size << " bytes" << std::endl;
-        std::cout << "Type: " << asset.m_Type << std::endl;
-        // ...
-    }
-
-    return 0;
-}
