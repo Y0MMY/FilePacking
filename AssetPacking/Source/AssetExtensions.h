@@ -7,8 +7,8 @@
 
 inline static std::unordered_map<std::string, AssetType> s_AssetExtensionMap =
 {
-	{ ".png", AssetType::PNG },
-	{ ".jpg", AssetType::JPG },
+	{ ".png", AssetType::Image },
+	{ ".jpg", AssetType::Image },
 };
 
 
@@ -18,14 +18,14 @@ std::string GetExtensionFromType(AssetType type)
 	{
 		case AssetType::None:
 				return "None";
-		case AssetType::JPG:
-			return "ImageJPG";
-		case AssetType::PNG:
-			return "ImagePNG";
+		case AssetType::Image:
+			return "Image";
 		case AssetType::Text:
 			return "Text";
 		case AssetType::Video:
 			return "Video";
+		case AssetType::Audio:
+			return "Audio";
 
 	}
 	return "None";

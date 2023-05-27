@@ -31,7 +31,7 @@ std::vector<char> AssetImporter::ReadFileContents(const std::filesystem::path& f
 	return contents;
 }
 
-bool AssetImporter::Pack(const std::filesystem::path& outputPath)
+bool AssetImporter::Pack(const std::filesystem::path& outputPath, const std::string& extension)
 {
 	if (m_Assets.empty()) return false;
 
@@ -45,7 +45,7 @@ bool AssetImporter::Pack(const std::filesystem::path& outputPath)
 	for (const auto& it : typeAssets)
 	{
 		AssetType type = it.first;
-		std::filesystem::path filePath = outputPath / (GetExtensionFromType(type) + ".bin");
+		std::filesystem::path filePath = outputPath / (GetExtensionFromType(type) + extension);
 		std::ofstream outputFile(filePath, std::ios::binary | std::ios::trunc);
 
 		if (!outputFile)
@@ -125,18 +125,27 @@ std::vector<AssetImporter::Asset> AssetImporter::ReadFile(const std::filesystem:
 	return assets;
 }
 
+bool AssetImporter::WriteFileData(const AssetImporter::Asset& asset, const std::filesystem::path& outputPath)
+{
+	std::ofstream outputFile(outputPath.empty() ? asset.m_Name : outputPath, std::ios::binary | std::ios::trunc);
+	if(!outputFile.is_open()) return false;
+
+	outputFile.write(reinterpret_cast<const char*>(asset.m_Data.data()), asset.m_Size);
+	return true;
+}
+
 void AssetImporter::AddResource(const std::filesystem::path& inputPath)
 {
 	if (!std::filesystem::exists(inputPath))
 	{
-		std::cout << "Файл не существует." << std::endl;
+		std::cout << "File is not exist" << std::endl;
 		return;
 	}
 
 	std::vector<char> fileContents = ReadFileContents(inputPath);
 	if (fileContents.empty())
 	{
-		std::cout << "Не удалось прочитать содержимое файла." << std::endl;
+		std::cout << "Could not read the contents of the file" << std::endl;
 		return;
 	}
 

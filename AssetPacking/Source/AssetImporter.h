@@ -9,7 +9,7 @@
 class AssetImporter
 {
 public:
-	bool Pack(const std::filesystem::path & outputPath);
+	bool Pack(const std::filesystem::path & outputPath, const std::string& extension = ".bin");
 	void AddResource(const std::filesystem::path& inputPath);
 	static void PackAllResourñes(const std::filesystem::path& inputPath, const std::filesystem::path& outputPath);
 private:
@@ -24,6 +24,7 @@ private:
 	};
 public:
 	static std::vector<Asset> ReadFile(const std::filesystem::path& filePath);
+	static bool WriteFileData(const AssetImporter::Asset& asset, const std::filesystem::path& outputPath = "");
 private:
 	std::vector<Asset> m_Assets;
 };

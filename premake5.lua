@@ -19,10 +19,10 @@ project "AssetPacking"
 
 	files 
 	{ 
-		"%{prj.name}/**.h", 
-		"%{prj.name}/**.c", 
-		"%{prj.name}/**.hpp", 
-		"%{prj.name}/**.cpp" 
+		"%{prj.name}/Source/**.h", 
+		"%{prj.name}/Source/**.c", 
+		"%{prj.name}/Source/**.hpp", 
+		"%{prj.name}/Source/**.cpp" 
     }
 
     
