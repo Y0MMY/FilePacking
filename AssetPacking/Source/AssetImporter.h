@@ -5,26 +5,19 @@
 #include <filesystem>
 
 #include "AssetTypes.h"
+#include "AssetInterface.h"
 
-class AssetImporter
+class AssetImporter : public Asset
 {
 public:
-	bool Pack(const std::filesystem::path & outputPath, const std::string& extension = ".bin");
-	void AddResource(const std::filesystem::path& inputPath);
-	static void PackAllResourñes(const std::filesystem::path& inputPath, const std::filesystem::path& outputPath);
+	bool Pack(const std::filesystem::path & outputPath, const std::string& extension = ".bin") override;
+	void AddResource(const std::filesystem::path& inputPath) override;
+	void PackAllResourñes(const std::filesystem::path& inputPath, const std::filesystem::path& outputPath) override {}
 private:
 	std::vector<char> ReadFileContents(const std::filesystem::path& filePath);
-private:
-	struct Asset
-	{
-		size_t m_Size;
-		std::string m_Name;
-		std::vector<char> m_Data;
-		AssetType m_Type = AssetType::None;
-	};
 public:
-	static std::vector<Asset> ReadFile(const std::filesystem::path& filePath);
-	static bool WriteFileData(const AssetImporter::Asset& asset, const std::filesystem::path& outputPath = "");
+	std::vector<AssetInfo> ReadFile(const std::filesystem::path& filePath) override;
+	bool WriteFileData(const AssetInfo& asset, const std::filesystem::path& outputPath = "") override;
 private:
-	std::vector<Asset> m_Assets;
+	std::vector<AssetInfo> m_Assets;
 };

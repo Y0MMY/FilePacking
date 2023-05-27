@@ -35,7 +35,7 @@ bool AssetImporter::Pack(const std::filesystem::path& outputPath, const std::str
 {
 	if (m_Assets.empty()) return false;
 
-	std::unordered_map<AssetType, std::vector<Asset>> typeAssets;
+	std::unordered_map<AssetType, std::vector<AssetInfo>> typeAssets;
 
 	for (const auto& asset : m_Assets)
 	{
@@ -84,7 +84,7 @@ bool AssetImporter::Pack(const std::filesystem::path& outputPath, const std::str
 	return true;
 }
 
-std::vector<AssetImporter::Asset> AssetImporter::ReadFile(const std::filesystem::path& filePath)
+std::vector<AssetInfo> AssetImporter::ReadFile(const std::filesystem::path& filePath)
 {
 	std::ifstream inputFile(filePath, std::ios::binary);
 	if (!inputFile.is_open())
@@ -93,7 +93,7 @@ std::vector<AssetImporter::Asset> AssetImporter::ReadFile(const std::filesystem:
 		return {};
 	}
 
-	std::vector<Asset> assets;
+	std::vector<AssetInfo> assets;
 
 	// Read count of assets
 	size_t assetSize;
@@ -101,7 +101,7 @@ std::vector<AssetImporter::Asset> AssetImporter::ReadFile(const std::filesystem:
 
 	for (size_t i = 0; i < assetSize; i++)
 	{
-		Asset asset;
+		AssetInfo asset;
 
 		// Read name length
 		size_t nameLength;
@@ -125,7 +125,7 @@ std::vector<AssetImporter::Asset> AssetImporter::ReadFile(const std::filesystem:
 	return assets;
 }
 
-bool AssetImporter::WriteFileData(const AssetImporter::Asset& asset, const std::filesystem::path& outputPath)
+bool AssetImporter::WriteFileData(const AssetInfo& asset, const std::filesystem::path& outputPath)
 {
 	std::ofstream outputFile(outputPath.empty() ? asset.m_Name : outputPath, std::ios::binary | std::ios::trunc);
 	if(!outputFile.is_open()) return false;

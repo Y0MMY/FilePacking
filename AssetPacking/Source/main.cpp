@@ -9,8 +9,8 @@ int main()
 	//ai.AddResource("AssetImporter.cpp");
 	//ai.AddResource("Assets/Images/1.png");
 	//ai.AddResource("Assets/Images/2.jpg");
-	auto v = AssetImporter::ReadFile("Image.bin");
-	AssetImporter::WriteFileData(v[1]);
+	auto v = ai.AssetImporter::ReadFile("Image.bin");
+	ai.AssetImporter::WriteFileData(v[1]);
 	//ai.Pack("");
 	return 0;
 }

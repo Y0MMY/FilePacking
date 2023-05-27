@@ -1,6 +1,8 @@
 #pragma once
 
 #include <cstdint>
+#include <string>
+#include <vector>
 
 enum class AssetFlag : uint16_t
 {
@@ -18,5 +20,11 @@ enum class AssetType : uint16_t
 	Audio
 };
 
-
+struct AssetInfo
+{
+	size_t m_Size;
+	std::string m_Name;
+	std::vector<char> m_Data;
+	AssetType m_Type = AssetType::None;
+};
 	
